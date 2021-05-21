@@ -17,4 +17,7 @@ public interface RespostaQuestaoRep extends JpaRepository<RespostaQuestao,Long> 
 
     @Query("select r.aluno.id, avg(r.nota) from RespostaQuestao r group by r.aluno.id")
     List<Object[]> mediaNotaTodos();
+
+    @Query("select r from RespostaQuestao r where r.aluno.id = :idAluno and r.id = :idResposta")
+    RespostaQuestao respostaEhDoAluno(Long idResposta,Long idAluno);
 }

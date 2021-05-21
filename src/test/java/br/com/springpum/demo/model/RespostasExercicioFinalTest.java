@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,15 +61,33 @@ class RespostasExercicioFinalTest {
         RespostaQuestao resposta11 = new RespostaQuestao(listaAvaliacoesSalvas.get(1),aluno3, 9);
         RespostaQuestao resposta12 = new RespostaQuestao(listaAvaliacoesSalvas.get(2),aluno4, 4);
 
-        respostaRepository.save(resposta1);respostaRepository.save(resposta5);respostaRepository.save(resposta9);
-        respostaRepository.save(resposta2);respostaRepository.save(resposta6);respostaRepository.save(resposta10);
-        respostaRepository.save(resposta3);respostaRepository.save(resposta7);respostaRepository.save(resposta11);
-        respostaRepository.save(resposta4);respostaRepository.save(resposta8);respostaRepository.save(resposta12);
+        respostaRepository.save(resposta1);respostaRepository.save(resposta5);respostaRepository.save(resposta9);// 1l 2l 3l
+        respostaRepository.save(resposta2);respostaRepository.save(resposta6);respostaRepository.save(resposta10); // 4l 5l 6l
+        respostaRepository.save(resposta3);respostaRepository.save(resposta7);respostaRepository.save(resposta11);// 7l 8l 9l
+        respostaRepository.save(resposta4);respostaRepository.save(resposta8);respostaRepository.save(resposta12); // 10l 11l 12l
 
+        /*
         List<RespostaQuestao> respostaQuestoes = respostaRepository.findAll();
-        /*for (RespostaQuestao r:respostaQuestoes) {
+        for (RespostaQuestao r:respostaQuestoes) {
             System.out.println("Resposta: " + r.getNota() + " -- " + r.getAluno().getNome());
-        }*/
+        }
+        */
+    }
+
+    @Test
+    public void respostaExiste(){
+        Optional<RespostaQuestao>  resposta = respostaRepository.findById(13L);
+        Assertions.assertFalse(resposta.isPresent());
+        Optional<RespostaQuestao>  resposta2 = respostaRepository.findById(3L);
+        Assertions.assertTrue(resposta2.isPresent());
+    }
+
+    @Test
+    public void respostaEhDoAluno(){
+        Assertions.assertNotNull(respostaRepository.respostaEhDoAluno(3L, 2L));//3  É DO ALUNO 2
+        Assertions.assertNull(respostaRepository.respostaEhDoAluno(3L, 1L));//3 NÃO É DO ALUNO 1
+        Assertions.assertNull(respostaRepository.respostaEhDoAluno(10L, 1L)); //10L -> 4L
+        Assertions.assertNotNull(respostaRepository.respostaEhDoAluno(10L, 2L));
     }
 
     @Test

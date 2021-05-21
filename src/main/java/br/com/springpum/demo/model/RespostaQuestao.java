@@ -73,7 +73,8 @@ public class RespostaQuestao {
     @Override
     public String toString() {
         return "RespostaQuestao{" +
-                "avaliacao=" + avaliacao +
+                "id=" + id +
+                ", avaliacao=" + avaliacao +
                 ", aluno=" + aluno +
                 ", nota=" + nota +
                 '}';
